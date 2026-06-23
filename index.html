@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raj za Domom — Záhradnícke služby</title>
+<meta name="description" content="Profesionálna starostlivosť o záhrady v Banskobystrickom, Nitrianskom a Bratislavskom kraji. Kosenie, údržba, rez stromov, realizácia záhrad.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Archivo:ital,wght@0,400..800;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#142318;
+    --ink-2:#1c2e1f;
+    --ink-3:#23381e;
+    --bone:#f5efdd;
+    --bone-2:#ece2c6;
+    --moss:#5d6a45;
+    --moss-deep:#3c4a2c;
+    --clay:#c25a31;
+    --clay-dim:#a8492a;
+    --gold:#c9a24c;
+    --line-on-dark: rgba(245,239,221,0.16);
+    --line-on-light: rgba(20,35,24,0.14);
+    --display: "Fraunces", serif;
+    --body: "Archivo", sans-serif;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bone);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;}
+  h1,h2,h3,h4{font-family:var(--display);margin:0;font-weight:600;}
+  p{margin:0;}
+
+  .eyebrow{
+    font-family:var(--body);
+    font-size:12.5px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--clay);
+    display:flex;
+    align-items:center;
+    gap:.55em;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px;height:1px;background:var(--clay);
+    display:inline-block;
+  }
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease), transform .9s var(--ease);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-stagger > *{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal-stagger.in > *{opacity:1;transform:translateY(0);}
+  .reveal-stagger.in > *:nth-child(1){transition-delay:.02s;}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:.1s;}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:.18s;}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:.26s;}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:.34s;}
+  .reveal-stagger.in > *:nth-child(6){transition-delay:.42s;}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal,.reveal-stagger>*{opacity:1!important;transform:none!important;transition:none!important;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    padding:18px 0;
+    transition:background .4s var(--ease), padding .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  header.scrolled{
+    background:rgba(245,239,221,.92);
+    backdrop-filter: blur(8px);
+    padding:11px 0;
+    box-shadow:0 1px 0 var(--line-on-light);
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;gap:24px;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:.01em;color:var(--ink);}
+  .brand .leaf-mark{width:26px;height:26px;flex:none;}
+  .brand .leaf-mark path{stroke:var(--clay);}
+  nav.links{display:flex;gap:30px;font-size:14px;font-weight:600;letter-spacing:.01em;}
+  nav.links a{position:relative;padding:4px 0;color:var(--moss-deep);}
+  nav.links a::after{
+    content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--clay);
+    transition:width .35s var(--ease);
+  }
+  nav.links a:hover::after{width:100%;}
+  .nav-cta{
+    display:flex;align-items:center;gap:8px;
+    font-size:14px;font-weight:700;
+    border:1px solid var(--ink);
+    padding:9px 16px;border-radius:999px;
+    transition:background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .nav-cta:hover{background:var(--ink);color:var(--bone);}
+  .nav-burger{display:none;}
+
+  @media (max-width:880px){
+    nav.links{display:none;}
+    .nav-cta span.long{display:none;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background:var(--ink);
+    color:var(--bone);
+    padding:168px 0 110px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 60% 50% at 85% 8%, rgba(201,162,76,.16), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 5% 90%, rgba(93,106,69,.28), transparent 60%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;z-index:2;
+    display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(40px,6vw,74px);
+    line-height:1.04;
+    letter-spacing:-.01em;
+    font-weight:600;
+    margin:18px 0 22px;
+  }
+  .hero h1 em{font-style:italic;font-weight:500;color:var(--gold);}
+  .hero p.lede{
+    font-size:18px;max-width:480px;color:rgba(245,239,221,.78);line-height:1.6;
+    margin-bottom:36px;
+  }
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-weight:700;font-size:14.5px;
+    padding:14px 26px;border-radius:999px;
+    transition:transform .3s var(--ease), background .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease);
+    cursor:pointer;border:1px solid transparent;
+  }
+  .btn-primary{background:var(--clay);color:var(--bone);box-shadow:0 8px 24px -8px rgba(194,90,49,.7);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(194,90,49,.8);}
+  .btn-ghost{border-color:rgba(245,239,221,.35);color:var(--bone);}
+  .btn-ghost:hover{background:rgba(245,239,221,.1);transform:translateY(-2px);}
+  .btn svg{width:16px;height:16px;}
+
+  .hero-art{position:relative;height:440px;}
+  .hero-art svg{width:100%;height:100%;}
+
+  .hero-meta{
+    position:relative;z-index:2;
+    display:flex;gap:36px;margin-top:78px;flex-wrap:wrap;
+    border-top:1px solid var(--line-on-dark);padding-top:26px;
+  }
+  .hero-meta div{font-size:13.5px;color:rgba(245,239,221,.6);}
+  .hero-meta strong{display:block;font-family:var(--display);font-size:25px;font-weight:600;color:var(--bone);margin-bottom:2px;}
+
+  /* growth vine svg path draw */
+  .vine-path{
+    fill:none;stroke:var(--gold);stroke-width:1.6;
+    stroke-dasharray:1;stroke-dashoffset:1;
+    pathLength:1;
+    opacity:.85;
+  }
+  .leaf-bud{transform-origin:center;transition:transform .5s var(--ease), opacity .5s var(--ease);opacity:0;transform:scale(.3);}
+  .leaf-bud.show{opacity:1;transform:scale(1);}
+
+  /* ---------- section frame ---------- */
+  section{position:relative;}
+  .band-light{background:var(--bone);color:var(--ink);}
+  .band-dark{background:var(--ink);color:var(--bone);}
+  .pad{padding:120px 0;}
+  @media (max-width:720px){.pad{padding:80px 0;}}
+
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:64px;flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(30px,4vw,46px);max-width:560px;line-height:1.08;}
+  .section-head p{max-width:340px;font-size:15px;opacity:.7;line-height:1.6;}
+
+  /* ---------- intro strip ---------- */
+  .intro{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start;}
+  .intro blockquote{
+    font-family:var(--display);font-style:italic;font-weight:500;
+    font-size:clamp(24px,3vw,32px);line-height:1.32;
+    border-left:2px solid var(--clay);padding-left:26px;margin:0;
+  }
+  .intro .intro-copy{font-size:16.5px;line-height:1.75;color:#3a4a3a;}
+  .intro .intro-copy p + p{margin-top:16px;}
+
+  /* ---------- services as garden rows ---------- */
+  .beds-wrap{position:relative;}
+  .vine-rail{position:absolute;left:-2px;top:6px;bottom:6px;width:46px;display:none;}
+  @media (min-width:980px){.vine-rail{display:block;}}
+
+  .bed-row{
+    display:grid;grid-template-columns:230px 1fr;gap:46px;
+    padding:46px 0;
+    border-top:1px solid var(--line-on-light);
+    position:relative;
+  }
+  .bed-row:first-child{border-top:1px solid var(--line-on-light);}
+  .bed-tag{display:flex;flex-direction:column;gap:14px;}
+  .bed-tag .plot{font-family:var(--display);font-size:14px;font-weight:700;color:var(--clay);letter-spacing:.04em;}
+  .bed-tag h3{font-size:25px;line-height:1.18;}
+  .bed-icon{width:40px;height:40px;}
+  .bed-icon path,.bed-icon circle,.bed-icon ellipse{stroke:var(--moss-deep);}
+
+  .bed-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+  .bed-item{
+    display:flex;align-items:flex-start;gap:10px;
+    padding:14px 16px;border-radius:14px;
+    background:var(--bone-2);
+    font-size:14.5px;font-weight:600;color:var(--moss-deep);
+    transition:background .3s var(--ease), transform .3s var(--ease);
+  }
+  .bed-item:hover{background:var(--ink);color:var(--bone);transform:translateY(-3px);}
+  .bed-item svg{width:16px;height:16px;flex:none;margin-top:1px;}
+  .bed-item:hover svg path{stroke:var(--gold);}
+
+  @media (max-width:880px){
+    .bed-row{grid-template-columns:1fr;gap:18px;}
+  }
+
+  /* ---------- why us ---------- */
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-on-dark);border:1px solid var(--line-on-dark);}
+  .why-card{background:var(--ink);padding:36px 28px;min-height:200px;display:flex;flex-direction:column;gap:14px;justify-content:space-between;transition:background .35s var(--ease);}
+  .why-card:hover{background:var(--ink-3);}
+  .why-card svg{width:30px;height:30px;}
+  .why-card svg path{stroke:var(--gold);}
+  .why-card h4{font-size:17px;font-weight:700;font-family:var(--body);}
+  .why-card p{font-size:13.5px;color:rgba(245,239,221,.65);line-height:1.55;}
+  @media (max-width:880px){.why-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:540px){.why-grid{grid-template-columns:1fr;}}
+
+  /* ---------- pricing ---------- */
+  .price-frame{
+    background:var(--bone-2);
+    border-radius:26px;
+    padding:8px;
+  }
+  .price-table{width:100%;border-collapse:collapse;font-size:15.5px;}
+  .price-table thead th{
+    text-align:left;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--moss-deep);padding:18px 26px 14px;font-weight:700;
+  }
+  .price-table tbody td{padding:16px 26px;border-top:1px dashed rgba(60,74,44,.25);}
+  .price-table tbody tr td:first-child{font-weight:600;}
+  .price-table tbody tr td:last-child{text-align:right;font-family:var(--display);font-weight:600;font-size:17px;color:var(--clay);white-space:nowrap;}
+  .price-table tbody tr:hover{background:rgba(255,255,255,.55);}
+  .price-note{font-size:13px;opacity:.65;padding:18px 26px 6px;}
+
+  /* ---------- reviews ---------- */
+  .review-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .review-card{
+    background:var(--bone);border:1px solid var(--line-on-light);border-radius:18px;
+    padding:30px 28px;display:flex;flex-direction:column;gap:18px;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .review-card:hover{transform:translateY(-6px);box-shadow:0 22px 40px -22px rgba(20,35,24,.35);}
+  .stars{display:flex;gap:4px;}
+  .stars svg{width:15px;height:15px;}
+  .stars svg path{fill:var(--clay);stroke:none;}
+  .review-card p{font-family:var(--display);font-style:italic;font-size:18px;line-height:1.5;}
+  .review-card span{font-size:13px;font-weight:700;color:var(--moss-deep);letter-spacing:.02em;}
+  @media (max-width:880px){.review-strip{grid-template-columns:1fr;}}
+
+  /* ---------- coverage ---------- */
+  .coverage{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .route-svg{width:100%;height:auto;}
+  .route-svg .route-line{fill:none;stroke:var(--bone);stroke-width:2;stroke-dasharray:1;stroke-dashoffset:1;pathLength:1;}
+  .route-svg .city-dot{fill:var(--gold);}
+  .route-svg text{font-family:var(--body);font-size:12px;font-weight:700;fill:var(--bone);letter-spacing:.02em;}
+  .coverage-copy p{font-size:16px;line-height:1.7;color:rgba(245,239,221,.78);}
+  .coverage-copy p + p{margin-top:14px;}
+  .coverage-copy .region-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .region-list span{
+    font-size:13px;font-weight:700;padding:8px 14px;border-radius:999px;
+    border:1px solid var(--line-on-dark);color:var(--bone);
+  }
+
+  /* ---------- contact / footer ---------- */
+  .contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;}
+  .contact-card{
+    background:var(--bone-2);border-radius:24px;padding:42px;
+  }
+  .contact-card h3{font-size:24px;margin-bottom:22px;}
+  .contact-line{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--line-on-light);}
+  .contact-line:first-of-type{border-top:none;}
+  .contact-line svg{width:18px;height:18px;flex:none;margin-top:2px;}
+  .contact-line svg path,.contact-line svg circle{stroke:var(--clay);}
+  .contact-line a{font-weight:700;font-size:15.5px;}
+  .contact-line a:hover{color:var(--clay);}
+
+  .hours-table{width:100%;font-size:14.5px;border-collapse:collapse;}
+  .hours-table td{padding:9px 0;border-top:1px solid var(--line-on-light);}
+  .hours-table tr:first-child td{border-top:none;}
+  .hours-table td:first-child{font-weight:700;}
+  .hours-table td:last-child{text-align:right;color:var(--moss-deep);}
+  .hours-table tr.closed td:last-child{color:var(--clay);font-weight:700;}
+
+  footer{background:var(--ink);color:rgba(245,239,221,.55);padding:46px 0;font-size:13px;}
+  .footer-row{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
+  .footer-row .brand{color:var(--bone);font-size:16px;}
+  .footer-row .brand .leaf-mark path{stroke:var(--gold);}
+
+  /* big slogan band */
+  .slogan-band{
+    background:var(--clay);color:var(--bone);text-align:center;padding:80px 0;
+  }
+  .slogan-band h2{
+    font-size:clamp(28px,4.4vw,52px);font-weight:500;font-style:italic;line-height:1.2;max-width:880px;margin:0 auto;
+  }
+
+  ::selection{background:var(--gold);color:var(--ink);}
+
+  :focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:4px;}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap nav-row">
+    <a href="#hero" class="brand">
+      <svg class="leaf-mark" viewBox="0 0 26 26" fill="none"><path d="M13 23C13 23 4 19 4 9.5C4 9.5 13 7 13 3C13 7 22 9.5 22 9.5C22 19 13 23 13 23Z" stroke-width="1.4"/><path d="M13 23V9" stroke-width="1.4"/></svg>
+      Raj za Domom
+    </a>
+    <nav class="links">
+      <a href="#sluzby">Služby</a>
+      <a href="#preco">Prečo my</a>
+      <a href="#cennik">Cenník</a>
+      <a href="#recenzie">Recenzie</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="nav-cta" href="tel:+421948555777">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11 11 0 0 0 3.4.55 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .55 3.4 1 1 0 0 1-.25 1Z"/></svg>
+      <span class="long">+421 948 555 777</span>
+    </a>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow reveal">Banskobystrický · Nitriansky · Bratislavský kraj</p>
+        <h1 class="reveal">Váš vlastný kúsok <em>raja</em> hneď za dverami.</h1>
+        <p class="lede reveal">Kosíme, strihame, sadíme a navrhujeme záhrady od Banskej Bystrice až po Bratislavu — s férovými cenami a rukami, ktoré poznajú každý záhon.</p>
+        <div class="hero-ctas reveal">
+          <a href="#kontakt" class="btn btn-primary">
+            Bezplatná obhliadka
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#sluzby" class="btn btn-ghost">Pozrieť služby</a>
+        </div>
+      </div>
+      <div class="hero-art reveal">
+        <svg viewBox="0 0 420 440" id="heroVine">
+          <path class="vine-path" id="heroVinePath" d="M340 18 C300 70, 350 110, 300 150 C250 190, 290 230, 230 260 C170 290, 200 330, 140 360 C90 385, 110 410, 60 425" stroke-width="1.6"/>
+          <g class="leaf-bud" data-d="0.1"><path d="M340 18c0 0 26-10 36 8s-10 30-22 24-14-32-14-32z" fill="none" stroke="#c9a24c" stroke-width="1.3" transform="translate(-340,-18) translate(340,18)"/></g>
+          <!-- decorative leaves scattered along path -->
+          <g fill="none" stroke="#c9a24c" stroke-width="1.3">
+            <path class="leaf-bud" data-d="0.18" d="M298 145c10-14 32-14 38 0-6 14-28 14-38 0z" transform="rotate(20 298 145)"/>
+            <path class="leaf-bud" data-d="0.34" d="M232 256c10-14 32-14 38 0-6 14-28 14-38 0z" transform="rotate(-15 232 256)"/>
+            <path class="leaf-bud" data-d="0.52" d="M180 320c10-14 32-14 38 0-6 14-28 14-38 0z" transform="rotate(35 180 320)"/>
+            <path class="leaf-bud" data-d="0.74" d="M118 372c10-14 32-14 38 0-6 14-28 14-38 0z" transform="rotate(-25 118 372)"/>
+            <path class="leaf-bud" data-d="0.9" d="M64 415c10-14 32-14 38 0-6 14-28 14-38 0z" transform="rotate(10 64 415)"/>
+          </g>
+          <g fill="#c9a24c">
+            <circle class="leaf-bud" data-d="0.05" cx="340" cy="18" r="4.5"/>
+            <circle class="leaf-bud" data-d="0.97" cx="60" cy="425" r="4.5"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="hero-meta reveal">
+      <div><strong>2026</strong>rok založenia</div>
+      <div><strong>3</strong>kraje pôsobenia</div>
+      <div><strong>07–18</strong>pracovné hodiny</div>
+      <div><strong>0 €</strong>úvodná konzultácia</div>
+    </div>
+  </div>
+</section>
+
+<section class="band-light pad" id="o-nas">
+  <div class="wrap intro">
+    <blockquote class="reveal">„Záhrada nie je projekt, ktorý sa raz dokončí — je to vzťah, o ktorý sa staráme každú sezónu.“</blockquote>
+    <div class="intro-copy reveal">
+      <p>Raj za Domom je záhradnícka firma zameraná na tvorbu, realizáciu a údržbu záhrad, ktoré prinášajú krásu, pokoj a pohodu do každodenného života. Veríme, že záhrada môže byť miestom oddychu, rodinných stretnutí a príjemne stráveného času na čerstvom vzduchu.</p>
+      <p>Našou prioritou je kvalitná práca, spoľahlivosť a individuálny prístup ku každému zákazníkovi. Či už potrebujete pravidelnú údržbu, novú výsadbu alebo kompletnú premenu pozemku, pomôžeme vám vytvoriť váš vlastný raj za domom.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band-light pad" id="sluzby">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Štyri záhony našej práce</h2>
+      <p>Od pravidelnej starostlivosti o trávnik až po kompletný návrh záhrady — každá oblasť je svoj vlastný, dobre opatrovaný záhon.</p>
+    </div>
+
+    <div class="beds-wrap">
+      <div class="bed-row reveal">
+        <div class="bed-tag">
+          <svg class="bed-icon" viewBox="0 0 40 40" fill="none" stroke-width="1.4"><path d="M6 30c6-14 8-18 14-18s8 4 14 18" /><path d="M6 30h28" /><path d="M20 12v6" /></svg>
+          <p class="plot">Záhon 01</p>
+          <h3>Starostlivosť o trávnik</h3>
+        </div>
+        <div class="bed-items">
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Kosenie trávnikov</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Vertikutácia</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Hnojenie</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Dosev poškodených plôch</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Zakladanie nových trávnikov</div>
+        </div>
+      </div>
+
+      <div class="bed-row reveal">
+        <div class="bed-tag">
+          <svg class="bed-icon" viewBox="0 0 40 40" fill="none" stroke-width="1.4"><path d="M8 8l24 24M32 8 8 32" /><circle cx="20" cy="20" r="13"/></svg>
+          <p class="plot">Záhon 02</p>
+          <h3>Údržba záhrad</h3>
+        </div>
+        <div class="bed-items">
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Strihanie živých plotov</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Pletie záhonov</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Mulčovanie</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Odstraňovanie buriny</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Jarné a jesenné upratovanie</div>
+        </div>
+      </div>
+
+      <div class="bed-row reveal">
+        <div class="bed-tag">
+          <svg class="bed-icon" viewBox="0 0 40 40" fill="none" stroke-width="1.4"><path d="M20 6v28M20 6c-6 4-10 10-10 16M20 6c6 4 10 10 10 16"/></svg>
+          <p class="plot">Záhon 03</p>
+          <h3>Stromy a kríky</h3>
+        </div>
+        <div class="bed-items">
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Rez ovocných stromov</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Tvarovanie okrasných drevín</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Výsadba stromov a kríkov</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Ošetrenie drevín</div>
+        </div>
+      </div>
+
+      <div class="bed-row reveal">
+        <div class="bed-tag">
+          <svg class="bed-icon" viewBox="0 0 40 40" fill="none" stroke-width="1.4"><path d="M6 32c8-18 20-18 28 0" /><path d="M14 32V20M20 32V14M26 32v-9"/></svg>
+          <p class="plot">Záhon 04</p>
+          <h3>Realizácia záhrad</h3>
+        </div>
+        <div class="bed-items">
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Návrhy záhrad</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Výsadba rastlín</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Zakladanie okrasných záhonov</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Pokládka obrubníkov</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Úprava terénu</div>
+          <div class="bed-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Dekoračné prvky</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slogan-band">
+  <div class="wrap reveal">
+    <h2>„Staráme sa o záhrady, v ktorých sa žije lepšie.“</h2>
+  </div>
+</section>
+
+<section class="band-dark pad" id="preco">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 style="color:var(--bone)">Prečo si vybrať Raj za Domom</h2>
+      <p style="color:rgba(245,239,221,.65)">Sedem dôvodov, pre ktoré sa k nám zákazníci vracajú každú sezónu.</p>
+    </div>
+    <div class="why-grid reveal-stagger">
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+        <div><h4>Profesionálny prístup</h4><p>Každú zákazku riešime systematicky a s odborným prehľadom.</p></div>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <div><h4>Spoľahlivosť a dochvíľnosť</h4><p>Prídeme presne v dohodnutom termíne, bez výnimiek.</p></div>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21c4-8 4-14 8-17 4 3 4 9 8 17"/></svg>
+        <div><h4>Riešenia na mieru</h4><p>Každá záhrada je iná — prispôsobíme jej aj náš postup.</p></div>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h18M12 3v18"/></svg>
+        <div><h4>Férové ceny</h4><p>Transparentný cenník bez skrytých poplatkov.</p></div>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 10h16"/></svg>
+        <div><h4>Kvalitné vybavenie</h4><p>Profesionálna technika pre čistý a presný výsledok.</p></div>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/></svg>
+        <div><h4>Rýchle termíny</h4><p>Krátka čakacia doba aj v hlavnej sezóne.</p></div>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c4-4 8-7.5 8-12a8 8 0 10-16 0c0 4.5 4 8 8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <div><h4>Obhliadka zdarma</h4><p>Bezplatná konzultácia priamo u vás na pozemku.</p></div>
+      </div>
+      <div class="why-card" style="background:var(--clay);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f5efdd" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div><h4 style="color:#f5efdd">Dohodnite si termín</h4><p style="color:rgba(245,239,221,.85)"><a href="tel:+421948555777" style="text-decoration:underline">+421 948 555 777</a></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-light pad" id="cennik">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Orientačný cenník</h2>
+      <p>Presnú cenu vždy stanovíme po nezáväznej obhliadke na mieste — tu je orientačný prehľad.</p>
+    </div>
+    <div class="price-frame reveal">
+      <table class="price-table">
+        <thead><tr><th>Služba</th><th style="text-align:right">Cena</th></tr></thead>
+        <tbody>
+          <tr><td>Kosenie trávnika</td><td>0,20 – 0,35 €/m²</td></tr>
+          <tr><td>Kosenie vysokej trávy</td><td>0,35 – 0,80 €/m²</td></tr>
+          <tr><td>Strihanie živého plota</td><td>4 – 8 €/bm</td></tr>
+          <tr><td>Rez ovocných stromov</td><td>30 – 80 €/ks</td></tr>
+          <tr><td>Výrub menších stromov</td><td>od 50 €</td></tr>
+          <tr><td>Jarná údržba záhrady</td><td>od 120 €</td></tr>
+          <tr><td>Jesenná údržba záhrady</td><td>od 120 €</td></tr>
+          <tr><td>Mulčovanie záhonov</td><td>od 8 €/m²</td></tr>
+          <tr><td>Návrh záhrady</td><td>od 300 €</td></tr>
+          <tr><td>Zakladanie trávnika</td><td>8 – 15 €/m²</td></tr>
+          <tr><td>Pokládka kobercového trávnika</td><td>15 – 25 €/m²</td></tr>
+          <tr><td>Výsadba rastlín</td><td>od 10 €/ks + materiál</td></tr>
+          <tr><td>Kompletná realizácia záhrady</td><td>od 1 500 €</td></tr>
+        </tbody>
+      </table>
+      <p class="price-note">Finálna cena závisí od rozsahu prác, dostupnosti pozemku a použitého materiálu.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band-light pad" id="recenzie" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Čo o nás hovoria zákazníci</h2>
+    </div>
+    <div class="review-strip reveal-stagger">
+      <div class="review-card">
+        <div class="stars">
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+        </div>
+        <p>„Skvelá komunikácia, rýchla realizácia a nádherný výsledok. Naša záhrada vyzerá lepšie ako kedykoľvek predtým.“</p>
+        <span>Overená recenzia</span>
+      </div>
+      <div class="review-card">
+        <div class="stars">
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+        </div>
+        <p>„Spoľahlivá firma, ktorá si dáva záležať na detailoch. Odporúčam každému.“</p>
+        <span>Overená recenzia</span>
+      </div>
+      <div class="review-card">
+        <div class="stars">
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1l2.9 6 6.6.6-5 4.4 1.5 6.5L10 15l-5.9 3.5L5.6 12l-5-4.4 6.6-.6z"/></svg>
+        </div>
+        <p>„Výborný pomer ceny a kvality. Trávnik aj živý plot sú vždy perfektne upravené.“</p>
+        <span>Overená recenzia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-dark pad" id="pusobenie">
+  <div class="wrap coverage">
+    <div class="coverage-copy reveal">
+      <p class="eyebrow" style="margin-bottom:16px;">Kde pôsobíme</p>
+      <h2 style="color:var(--bone);font-size:clamp(28px,3.6vw,40px);margin-bottom:18px;">Od Banskej Bystrice až po Bratislavu.</h2>
+      <p>Starostlivosť o záhrady poskytujeme v Banskobystrickom, Nitrianskom a Bratislavskom kraji. Pravidelne realizujeme zákazky v okolí Banskej Bystrice, Zvolena, Nitry, Trnavy a Bratislavy.</p>
+      <p>Nezáleží na tom, či máte malú záhradu pri rodinnom dome, alebo veľký pozemok pri firme — váš raj za domom vytvoríme kdekoľvek na trase medzi Banskou Bystricou a Bratislavou.</p>
+      <div class="region-list">
+        <span>Banská Bystrica</span><span>Zvolen</span><span>Nitra</span><span>Trnava</span><span>Bratislava</span>
+      </div>
+    </div>
+    <div class="reveal">
+      <svg class="route-svg" id="routeSvg" viewBox="0 0 360 300">
+        <path class="route-line" id="routeLine" d="M300 40 C 270 70, 250 90, 230 100 C 190 120, 170 130, 150 150 C 120 175, 110 190, 90 210 C 65 232, 55 245, 40 260"/>
+        <circle class="city-dot" cx="300" cy="40" r="5"/><text x="312" y="44">Banská Bystrica</text>
+        <circle class="city-dot" cx="230" cy="100" r="4"/><text x="242" y="104">Zvolen</text>
+        <circle class="city-dot" cx="150" cy="150" r="4"/><text x="162" y="154">Nitra</text>
+        <circle class="city-dot" cx="90" cy="210" r="4"/><text x="102" y="214">Trnava</text>
+        <circle class="city-dot" cx="40" cy="260" r="5"/><text x="14" y="280">Bratislava</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="band-light pad" id="kontakt">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <p class="eyebrow" style="margin-bottom:18px;">Kontakt</p>
+      <h2 style="font-size:clamp(28px,3.6vw,40px);margin-bottom:22px;">Dohodneme si bezplatnú obhliadku.</h2>
+      <p style="font-size:16px;line-height:1.7;color:#3a4a3a;max-width:460px;margin-bottom:32px;">Napíšte nám alebo zavolajte — väčšinu obhliadok vieme dohodnúť do týždňa, v hlavnej sezóne čo najskôr podľa kapacít.</p>
+
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11 11 0 0 0 3.4.55 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .55 3.4 1 1 0 0 1-.25 1Z"/></svg>
+        <a href="tel:+421948555777">+421 948 555 777</a>
+      </div>
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+        <a href="mailto:info@rajzadomom.sk">info@rajzadomom.sk</a>
+      </div>
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18 14 14 0 010-18z"/></svg>
+        <a href="https://www.rajzadomom.sk" target="_blank" rel="noopener">www.rajzadomom.sk</a>
+      </div>
+      <div class="contact-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-7.2 7-12a7 7 0 10-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></svg>
+        <span style="font-weight:700;font-size:15.5px;">Sídlo: Banskobystrický kraj, Slovensko</span>
+      </div>
+    </div>
+
+    <div class="contact-card reveal">
+      <h3>Otváracie hodiny</h3>
+      <table class="hours-table">
+        <tr><td>Pondelok</td><td>07:00 – 18:00</td></tr>
+        <tr><td>Utorok</td><td>07:00 – 18:00</td></tr>
+        <tr><td>Streda</td><td>07:00 – 18:00</td></tr>
+        <tr><td>Štvrtok</td><td>07:00 – 18:00</td></tr>
+        <tr><td>Piatok</td><td>07:00 – 18:00</td></tr>
+        <tr><td>Sobota</td><td>08:00 – 14:00</td></tr>
+        <tr class="closed"><td>Nedeľa</td><td>Zatvorené</td></tr>
+      </table>
+      <a href="tel:+421948555777" class="btn btn-primary" style="margin-top:28px;width:100%;justify-content:center;background:var(--ink);">
+        Zavolať teraz
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <a href="#hero" class="brand">
+      <svg class="leaf-mark" viewBox="0 0 26 26" fill="none"><path d="M13 23C13 23 4 19 4 9.5C4 9.5 13 7 13 3C13 7 22 9.5 22 9.5C22 19 13 23 13 23Z" stroke-width="1.4"/><path d="M13 23V9" stroke-width="1.4"/></svg>
+      Raj za Domom
+    </a>
+    <span>© 2026 Raj za Domom – Záhradnícke služby. Banskobystrický kraj, Slovensko.</span>
+  </div>
+</footer>
+
+<script>
+  // header scroll state
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 30);
+  }, {passive:true});
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:.18});
+  revealEls.forEach(el=>io.observe(el));
+
+  // vine path draw using pathLength + stroke-dash, driven by scroll within hero
+  function setupPathDraw(path, progressFn){
+    if(!path) return;
+    const len = 1;
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+    function update(){
+      const p = Math.max(0, Math.min(1, progressFn()));
+      path.style.strokeDashoffset = (1 - p) * len;
+    }
+    update();
+    window.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+  }
+
+  const heroVinePath = document.getElementById('heroVinePath');
+  setupPathDraw(heroVinePath, ()=>{
+    const r = document.getElementById('hero').getBoundingClientRect();
+    return 1 - (r.bottom / (window.innerHeight + r.height));
+  });
+
+  // animate hero leaf buds in sequence as the vine progresses
+  const buds = document.querySelectorAll('.leaf-bud');
+  function updateBuds(){
+    const r = document.getElementById('hero').getBoundingClientRect();
+    const progress = Math.max(0, Math.min(1, 1 - (r.bottom / (window.innerHeight + r.height))));
+    buds.forEach(b=>{
+      const d = parseFloat(b.getAttribute('data-d'));
+      b.classList.toggle('show', progress >= d);
+    });
+  }
+  updateBuds();
+  window.addEventListener('scroll', updateBuds, {passive:true});
+  window.addEventListener('resize', updateBuds);
+
+  // route line draw when coverage section is visible
+  const routeLine = document.getElementById('routeLine');
+  if(routeLine){
+    routeLine.style.strokeDasharray = 1;
+    routeLine.style.strokeDashoffset = 1;
+    const routeIO = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          routeLine.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(.22,.61,.36,1)';
+          routeLine.style.strokeDashoffset = 0;
+          routeIO.unobserve(e.target);
+        }
+      });
+    }, {threshold:.4});
+    routeIO.observe(routeLine);
+  }
+</script>
+</body>
+</html>
